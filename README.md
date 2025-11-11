@@ -387,19 +387,37 @@ But create tickets to gradually improve legacy code.
 
 ## Publishing the Package
 
-To publish updates to PyPI:
+### Automated Publishing with GitHub Actions (Recommended)
 
-### First Time Setup
+The repository includes a GitHub Actions workflow that automatically publishes new versions.
+
+**Quick start:**
 
 ```bash
-# Install build tools
-pip install build twine
+# 1. Update version number
+# Edit python/pyproject.toml and python/lint_configs/__init__.py
 
-# Create PyPI account at https://pypi.org
-# Create API token at https://pypi.org/manage/account/token/
+# 2. Commit and tag
+git add .
+git commit -m "Bump version to 1.0.1"
+git tag v1.0.1
+git push origin v1.0.1
+
+# 3. GitHub Actions automatically:
+#    ✅ Builds the package
+#    ✅ Publishes to PyPI
+#    ✅ Creates a GitHub Release
 ```
 
-### Publishing a New Version
+**Setup (one-time):**
+
+1. Create a PyPI API token at https://pypi.org/manage/account/token/
+2. Add it to GitHub repository secrets as `PYPI_API_TOKEN`
+3. See [.github/workflows/README.md](.github/workflows/README.md) for details
+
+### Manual Publishing
+
+If you prefer to publish manually:
 
 ```bash
 # Navigate to the Python directory
