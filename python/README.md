@@ -11,11 +11,11 @@ Choose one of the methods below to use this configuration in your Python project
 Copy the configuration directly into your project:
 
 ```bash
-# Copy the linter config into your pyproject.toml
-curl https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/python/pyproject.toml >> pyproject.toml
+# Download and append to your pyproject.toml
+curl https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/python/pyproject-linters.toml >> pyproject.toml
 ```
 
-Or manually copy the tool sections from `pyproject.toml` into your project's `pyproject.toml`.
+Or manually copy the tool sections from `pyproject-linters.toml` into your project's `pyproject.toml`.
 
 ## Method 2: Git Submodule (Recommended for Teams)
 
@@ -27,10 +27,10 @@ git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
 git submodule update --init
 
 # Copy the config (one-time)
-cp .lint-configs/python/pyproject.toml ./pyproject.toml
+cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
 
 # Or create a symlink
-ln -s .lint-configs/python/pyproject.toml ./pyproject.toml
+ln -s .lint-configs/python/pyproject-linters.toml ./pyproject.toml
 
 # To update later
 git submodule update --remote
@@ -48,7 +48,7 @@ If you're using Ruff, you can extend the base configuration:
 ```toml
 # In your pyproject.toml
 [tool.ruff]
-extend = "path/to/lint-configs/python/pyproject.toml"
+extend = "path/to/lint-configs/python/pyproject-linters.toml"
 
 # Override specific settings for your project
 line-length = 100  # If you need different from 88
@@ -83,6 +83,8 @@ pip install -e ".[dev]"
 After copying the base configuration, customize these sections for your project:
 
 ### 1. Update Package Names
+
+In your project's `pyproject.toml` (after copying from `pyproject-linters.toml`):
 
 ```toml
 [tool.ruff.lint.isort]

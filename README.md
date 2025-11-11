@@ -52,10 +52,10 @@ git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
 git submodule update --init
 
 # Copy the config for your language
-cp .lint-configs/python/pyproject.toml ./pyproject.toml
+cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
 
 # Or create a symlink
-ln -s .lint-configs/python/pyproject.toml ./pyproject.toml
+ln -s .lint-configs/python/pyproject-linters.toml ./pyproject.toml
 ```
 
 **Benefits:**
@@ -70,7 +70,7 @@ Copy the configuration files directly:
 
 ```bash
 # Python
-curl -O https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/python/pyproject.toml
+curl -O https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/python/pyproject-linters.toml
 
 # TypeScript (coming soon)
 curl -O https://raw.githubusercontent.com/YOUR_ORG/lint-configs/main/typescript/.eslintrc.js
@@ -90,19 +90,19 @@ cp -r python/. ../my-new-project/
 
 ```
 lint-configs/
-├── README.md              # This file
+├── README.md                  # This file
 ├── python/
-│   ├── README.md          # Python-specific usage guide
-│   └── pyproject.toml     # Canonical Python config
-├── typescript/            # Coming soon
+│   ├── README.md              # Python-specific usage guide
+│   └── pyproject-linters.toml # Common linter rules for Python
+├── typescript/                # Coming soon
 │   ├── README.md
 │   ├── .eslintrc.js
 │   ├── .prettierrc.js
 │   └── tsconfig.json
-├── go/                    # Coming soon
+├── go/                        # Coming soon
 │   ├── README.md
 │   └── .golangci.yml
-└── rust/                  # Coming soon
+└── rust/                      # Coming soon
     ├── README.md
     └── clippy.toml
 ```
@@ -122,7 +122,7 @@ git init
 git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
 
 # 3. Copy relevant config
-cp .lint-configs/python/pyproject.toml .
+cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
 
 # 4. Customize for your project
 # Edit pyproject.toml to add your package name
@@ -141,7 +141,7 @@ Gradually adopt the configuration:
 git submodule add https://github.com/YOUR_ORG/lint-configs .lint-configs
 
 # 2. Copy config
-cp .lint-configs/python/pyproject.toml .
+cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
 
 # 3. See what needs to be fixed
 ruff check .
@@ -167,7 +167,7 @@ git pull origin main
 cd ..
 
 # Copy updated config
-cp .lint-configs/python/pyproject.toml .
+cp .lint-configs/python/pyproject-linters.toml ./pyproject.toml
 
 # Test changes
 ruff check .
