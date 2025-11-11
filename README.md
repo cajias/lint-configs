@@ -101,24 +101,27 @@ Use this repository as a GitHub template when creating new projects.
 
 ```
 lint-configs/
-├── README.md                      # This file
-├── pyproject.toml                 # Package configuration
-├── lint_configs/                  # Pip package
-│   ├── __init__.py                # Package entry point
-│   └── python/
-│       └── pyproject-linters.toml # Config file
-├── python/                        # Source configs
-│   ├── README.md                  # Python-specific usage guide
-│   └── pyproject-linters.toml     # Common linter rules for Python
-├── typescript/                    # Coming soon
+├── README.md                          # This file
+├── LICENSE                            # MIT License
+├── python/                            # Python linter configs
+│   ├── README.md                      # Python-specific guide
+│   ├── pyproject.toml                 # Pip package configuration
+│   ├── MANIFEST.in                    # Package manifest
+│   ├── pyproject-linters.toml         # Linter rules (source)
+│   └── lint_configs/                  # Pip package contents
+│       ├── __init__.py                # Package entry point
+│       └── python/
+│           └── pyproject-linters.toml # Linter rules (bundled)
+├── typescript/                        # Coming soon
 │   ├── README.md
+│   ├── package.json
 │   ├── .eslintrc.js
 │   ├── .prettierrc.js
 │   └── tsconfig.json
-├── go/                            # Coming soon
+├── go/                                # Coming soon
 │   ├── README.md
 │   └── .golangci.yml
-└── rust/                          # Coming soon
+└── rust/                              # Coming soon
     ├── README.md
     └── clippy.toml
 ```
@@ -399,6 +402,9 @@ pip install build twine
 ### Publishing a New Version
 
 ```bash
+# Navigate to the Python directory
+cd python/
+
 # 1. Update version number
 # Edit pyproject.toml and lint_configs/__init__.py
 
@@ -414,7 +420,8 @@ pip install --index-url https://test.pypi.org/simple/ cajias-linter-configs
 # 5. If all looks good, upload to PyPI
 twine upload dist/*
 
-# 6. Tag the release
+# 6. Tag the release (from repo root)
+cd ..
 git tag v1.0.0
 git push origin v1.0.0
 ```
@@ -424,6 +431,8 @@ git push origin v1.0.0
 For private organizations, use a private PyPI server:
 
 ```bash
+cd python/  # Navigate to Python directory
+
 # Option 1: Use your organization's private PyPI
 twine upload --repository-url https://pypi.yourorg.com dist/*
 

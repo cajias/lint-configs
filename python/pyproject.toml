@@ -31,4 +31,4 @@ build-backend = "hatchling.build"
 packages = ["lint_configs"]
 
 [tool.hatch.build.targets.wheel.force-include]
-"python/pyproject-linters.toml" = "lint_configs/python/pyproject-linters.toml"
+"pyproject-linters.toml" = "lint_configs/python/pyproject-linters.toml"
