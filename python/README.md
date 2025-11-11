@@ -6,47 +6,64 @@ Canonical linting configuration for Python projects with minimal ignores and com
 
 Choose one of the methods below to use this configuration in your Python project.
 
-## Method 1: Pip Package (Recommended)
+## Method 1: Copy from Package (Recommended)
 
-Install as a package and extend in your `pyproject.toml`:
+The easiest way to use these configurations is to copy them into your project. This allows all linting tools to work without needing explicit `--config` flags every time.
 
 ```bash
-# Install the configuration package
+# 1. Install the configuration package
 pip install agentic-guardrails
 
-# Or add to requirements-dev.txt
-echo 'agentic-guardrails>=1.0.0' >> requirements-dev.txt
+# 2. Copy the config to your project
+lint-configs copy
+
+# 3. Customize for your project (see output instructions)
+# Edit pyproject.toml to add your package name in:
+# - [tool.ruff.lint.isort] known-first-party
+# - [tool.coverage.run] source
 ```
 
-Then in your `pyproject.toml`:
+**If you already have a pyproject.toml:**
 
-```toml
-[tool.ruff]
-extend = "python/pyproject-linters.toml"  # Ruff finds it in site-packages
-line-length = 120
+```bash
+# Option A: Creates pyproject-linters.toml (then manually merge)
+lint-configs copy
 
-[tool.ruff.lint.isort]
-known-first-party = ["your_package"]  # Add your package name
+# Option B: Automatically appends to existing pyproject.toml
+lint-configs copy --merge
+# (You'll need to review and remove any duplicate sections)
+```
 
-[tool.coverage.run]
-source = ["your_package"]  # Add your package name
+**Updating the configuration:**
+
+```bash
+pip install --upgrade agentic-guardrails
+lint-configs copy  # Re-copy the updated config
 ```
 
 **Benefits:**
-- Version pinning: `agentic-guardrails==1.0.0`
-- Easy updates: `pip install --upgrade agentic-guardrails`
-- Works in CI/CD automatically
-- No git submodules or manual copying
-- Professional approach
+- ✅ Works out of the box with all tools (ruff, mypy, pylint, pytest)
+- ✅ No `--config` flags needed in commands
+- ✅ Version controlled in your repo
+- ✅ Easy to customize per-project
+- ✅ Clear attribution and update path
 
-**Note:** For MyPy and Pylint, you'll need to copy their configurations to your `pyproject.toml`, or use the Python API:
+**Programmatic API:**
 
 ```python
-from lint_configs import get_python_config_path
-print(get_python_config_path())  # Get full path to config file
+from lint_configs import copy_config_to_project
+
+# Copy to current directory
+config_path = copy_config_to_project()
+
+# Copy to specific directory
+config_path = copy_config_to_project(target_dir="./my-project")
+
+# Merge with existing pyproject.toml
+config_path = copy_config_to_project(merge_with_existing=True)
 ```
 
-## Method 2: Direct Copy (Simplest)
+## Method 2: Direct Download (No Package Install)
 
 Copy the configuration directly into your project:
 
@@ -63,7 +80,30 @@ curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject
 - Easy to customize per-project
 - All tools (Ruff, MyPy, Pylint) configured in one file
 
-## Method 3: Install from Git
+## Method 3: Use Package Configs with --config Flags (Advanced)
+
+For advanced users who want to keep configs in the package without copying:
+
+```bash
+# 1. Install the package
+pip install agentic-guardrails
+
+# 2. Use with explicit config paths
+CONFIG=$(python -c "from lint_configs import get_python_config_path; print(get_python_config_path())")
+ruff check --config $CONFIG .
+mypy --config-file $CONFIG .
+```
+
+**Benefits:**
+- Zero duplication
+- Automatic updates when you upgrade the package
+
+**Drawbacks:**
+- Requires explicit --config flags every time
+- More complex CI/CD setup
+- Not the recommended approach for most projects
+
+## Method 4: Install from Git
 
 Install the package directly from GitHub:
 

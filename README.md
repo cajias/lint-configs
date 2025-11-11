@@ -43,36 +43,33 @@ Comprehensive linting for Python projects using:
 
 ## Quick Start
 
-### Method 1: Pip Package from GitHub Packages (Recommended)
+### Python Projects (Recommended Method)
 
-Install the configuration package from GitHub Packages:
+The easiest way to use these configurations:
 
 ```bash
-# Install from GitHub Packages
-pip install --index-url https://pypi.pkg.github.com/cajias/simple/ agentic-guardrails
+# 1. Install the configuration package
+pip install agentic-guardrails
 
-# Or add to requirements-dev.txt:
-# --index-url https://pypi.pkg.github.com/cajias/simple/
-# --extra-index-url https://pypi.org/simple/
-# agentic-guardrails>=1.0.0
+# 2. Copy configs to your project
+lint-configs copy
+
+# 3. Customize for your project
+# Edit pyproject.toml to add your package name
 ```
 
-Then in your `pyproject.toml`:
+**What this does:**
+- ✅ Copies canonical linting config to your project
+- ✅ Works with all tools: ruff, mypy, pylint, pytest, black
+- ✅ No `--config` flags needed
+- ✅ Version-controlled and customizable
+- ✅ Easy to update: `pip install --upgrade agentic-guardrails && lint-configs copy`
 
-```toml
-[tool.ruff]
-extend = "python/pyproject-linters.toml"  # Ruff finds it in site-packages
-```
+See the [Python README](./python/README.md) for detailed instructions and alternative methods.
 
-**Benefits:**
-- No external accounts needed (uses GitHub)
-- Version controlled: `agentic-guardrails==1.0.0`
-- Easy updates: `pip install --upgrade agentic-guardrails`
-- Works with private repositories
-- Free unlimited storage
-- Automatic publishing via GitHub Actions
+### Alternative Methods
 
-### Method 2: Direct Copy (Simplest)
+#### Method 1: Direct Download (No Package Install)
 
 Copy the configuration file directly into your project:
 
@@ -87,6 +84,19 @@ curl https://raw.githubusercontent.com/cajias/lint-configs/main/python/pyproject
 - Complete control over configuration
 - No dependencies
 - Easy to customize per-project
+
+#### Method 2: Install from GitHub Packages
+
+Install the configuration package from GitHub Packages:
+
+```bash
+pip install --index-url https://pypi.pkg.github.com/cajias/simple/ agentic-guardrails
+```
+
+Then copy to your project:
+```bash
+lint-configs copy
+```
 
 ### Method 3: GitHub Template
 
