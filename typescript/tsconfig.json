@@ -41,7 +41,7 @@
 
     // Interop Constraints
     "isolatedModules": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
 
     // Completeness
     "skipDefaultLibCheck": false
