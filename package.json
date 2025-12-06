@@ -8,49 +8,27 @@
     "markdown"
   ],
   "scripts": {
-    "lint": "npm run lint:js && npm run lint:md",
-    "lint:js": "npx eslint . --ignore-pattern 'python/**'",
+    "lint": "npm run lint:md",
     "lint:md": "npx markdownlint '**/*.md' --ignore node_modules --ignore '**/node_modules/**'",
-    "lint:fix": "npm run lint:js:fix && npm run lint:md:fix",
-    "lint:js:fix": "npx eslint . --fix --ignore-pattern 'python/**'",
+    "lint:fix": "npm run lint:md:fix",
     "lint:md:fix": "npx markdownlint '**/*.md' --ignore node_modules --ignore '**/node_modules/**' --fix",
-    "format": "npx prettier --write '**/*.{ts,tsx,js,jsx,json,md}' --ignore-path .gitignore",
-    "format:check": "npx prettier --check '**/*.{ts,tsx,js,jsx,json,md}' --ignore-path .gitignore",
+    "format": "npx prettier --write '**/*.{json,md}' --ignore-path .gitignore",
+    "format:check": "npx prettier --check '**/*.{json,md}' --ignore-path .gitignore",
     "commitlint": "npx commitlint --edit",
     "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.18.0",
-    "@typescript-eslint/parser": "^8.18.0",
-    "eslint": "^9.16.0",
-    "eslint-config-prettier": "^10.1.0",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-n": "^17.15.0",
-    "eslint-plugin-no-only-tests": "^3.3.0",
-    "eslint-plugin-no-unsanitized": "^4.1.4",
-    "eslint-plugin-prettier": "^5.5.0",
-    "eslint-plugin-promise": "^7.2.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-security": "^3.0.1",
-    "eslint-plugin-sonarjs": "^3.0.5",
-    "eslint-plugin-unicorn": "^56.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.7.1",
-    "typescript": "^5.7.2"
+    "markdownlint-cli": "^0.46.0",
+    "prettier": "^3.7.1"
   },
   "engines": {
     "node": ">=18"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "npx eslint --fix",
-      "npx prettier --write"
-    ],
     "*.json": [
       "npx prettier --write"
     ],
