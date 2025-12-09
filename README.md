@@ -129,12 +129,6 @@ The claude-skills repository includes:
 - README writer and evaluator skills
 - And uses these linting configs as dependencies
 
-## MCP Server
-
-The MCP server in this repository provides lint/fix tools for Claude Code integration.
-
-See [mcp-server/README.md](./mcp-server/README.md) for details.
-
 ## Contributing
 
 Config changes affect all projects using these packages. Please:

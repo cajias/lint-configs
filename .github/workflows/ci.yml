@@ -24,17 +24,11 @@ jobs:
       - name: Install Node.js dependencies
         run: npm ci
 
-      - name: Lint TypeScript/JavaScript
+      - name: Lint Markdown
         run: npm run lint
 
       - name: Check formatting
         run: npm run format:check
-
-      - name: Type check
-        run: npm run typecheck
-
-      - name: Build MCP server
-        run: npm run build
 
       # Python setup
       - name: Set up Python
@@ -99,27 +93,3 @@ jobs:
           python -m build
           pip install dist/*.whl
           python -c "from lint_configs import __version__; print(f'✅ Python package v{__version__} installs successfully')"
-
-  test-mcp-server:
-    runs-on: ubuntu-latest
-    needs: lint-and-build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install and build MCP server
-        run: |
-          npm ci
-          cd mcp-server
-          npm run build
-
-      - name: Test MCP server starts
-        run: |
-          cd mcp-server
-          timeout 5s node dist/server.js || [ $? -eq 124 ] && echo "✅ MCP server starts successfully"
