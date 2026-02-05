@@ -7,7 +7,8 @@ const typescriptParser = require('@typescript-eslint/parser');
 const importPlugin = require('eslint-plugin-import');
 const securityPlugin = require('eslint-plugin-security');
 const sonarjsPlugin = require('eslint-plugin-sonarjs');
-const unicornPlugin = require('eslint-plugin-unicorn');
+// v62+ uses ESM with default export in CJS wrapper
+const unicornPlugin = require('eslint-plugin-unicorn').default || require('eslint-plugin-unicorn');
 const promisePlugin = require('eslint-plugin-promise');
 const nodePlugin = require('eslint-plugin-n');
 const prettierConfig = require('eslint-config-prettier');
