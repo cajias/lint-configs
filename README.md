@@ -1,8 +1,13 @@
-<p align="center">
-  <img src="assets/banner.png" alt="lint-configs" width="100%">
-</p>
+```
+██╗     ██╗███╗   ██╗████████╗    ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗ ███████╗
+██║     ██║████╗  ██║╚══██╔══╝   ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝ ██╔════╝
+██║     ██║██╔██╗ ██║   ██║█████╗██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗███████╗
+██║     ██║██║╚██╗██║   ██║╚════╝██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║╚════██║
+███████╗██║██║ ╚████║   ██║      ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝███████║
+╚══════╝╚═╝╚═╝  ╚═══╝   ╚═╝       ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
+```
 
-# lint-configs
+<p align="center"><em>Preferred linter configurations for common languages</em></p>
 
 <p align="center">
   <img src="https://img.shields.io/github/languages/top/cajias/lint-configs?style=for-the-badge" alt="Language">
