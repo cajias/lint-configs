@@ -1,25 +1,57 @@
-# Lint Configs - Shareable Linting Configurations
+<p align="center">
+  <img src="assets/banner.png" alt="lint-configs" width="100%">
+</p>
 
-Comprehensive, strict linting configurations for TypeScript/JavaScript, Python, and Markdown.
-Designed to enforce best practices and catch issues in AI-generated code.
+# lint-configs
 
-## Packages
+<p align="center">
+  <img src="https://img.shields.io/github/languages/top/cajias/lint-configs?style=for-the-badge" alt="Language">
+  <a href="https://github.com/cajias/lint-configs/actions"><img src="https://img.shields.io/github/actions/workflow/status/cajias/lint-configs/ci.yml?style=for-the-badge" alt="Build"></a>
+  <a href="https://github.com/cajias/lint-configs/blob/main/LICENSE"><img src="https://img.shields.io/github/license/cajias/lint-configs?style=for-the-badge" alt="License"></a>
+  <a href="https://github.com/cajias/lint-configs/stargazers"><img src="https://img.shields.io/github/stars/cajias/lint-configs?style=for-the-badge" alt="Stars"></a>
+  <img src="https://img.shields.io/badge/AI--ready-strict-FACC15?style=for-the-badge" alt="AI-ready strict">
+</p>
 
-This repository contains shareable linting configurations published to npm:
+**Preferred linter configurations for common languages — strict, shareable, and built to catch the kind of slop that AI-generated code loves to sneak in.** `lint-configs` bundles battle-tested [ESLint](https://eslint.org/), [markdownlint](https://github.com/DavidAnson/markdownlint), [Ruff](https://docs.astral.sh/ruff/), [MyPy](https://mypy-lang.org/), [Black](https://black.readthedocs.io/), and [Pylint](https://pylint.readthedocs.io/) rule sets into installable packages, so every project you touch enforces the same uncompromising bar with a single dependency.
 
-- **[@lint-configs/eslint-config](./typescript/)** - ESLint configuration with 220+ rules
-- **[@lint-configs/markdownlint-config](./markdown/)** - Markdownlint configuration with 40+ rules
-- **[Python configs](./python/)** - Ruff, MyPy, Black, and Pylint configurations
+<table>
+<tr><td><b>TypeScript / JavaScript</b></td><td>The <code>@lint-configs/eslint-config</code> npm package ships 220+ ESLint rules across security (XSS, eval, unsafe regex), Node.js, React hooks + accessibility, strict TypeScript, and complexity limits. Available as flat (<code>./flat</code>) or legacy (<code>./legacy</code>) configs.</td></tr>
+<tr><td><b>Markdown</b></td><td>The <code>@lint-configs/markdownlint-config</code> npm package provides 40+ documentation rules: 120-char line length, ATX-style headings, fenced code blocks with language hints, and consistent 2-space list indentation.</td></tr>
+<tr><td><b>Python</b></td><td>Drop-in <code>ruff.toml</code> and <code>pyproject</code> configs for Ruff (40+ rule categories: E, F, I, B, W, C90, PLR, SIM, RET, ANN), MyPy strict typing, Black formatting, and Pylint duplicate-code detection.</td></tr>
+<tr><td><b>Formatter-aware</b></td><td>Only disables rules that genuinely conflict with formatters (Prettier / Black). Everything else stays on, so linter and formatter never fight.</td></tr>
+<tr><td><b>Mirrored strictness</b></td><td>Each language's config mirrors the others' rigor — line length, complexity (max 10), security scanning, dead-code detection, and import sorting are aligned across the stack.</td></tr>
+<tr><td><b>CI-verified packaging</b></td><td>GitHub Actions lints every config, checks formatting, and proves both the npm and PyPI packages actually install before anything ships.</td></tr>
+</table>
 
-## Quick Start
+## Installation
 
-### TypeScript/JavaScript
+These are configuration packages — install the one(s) for your stack.
+
+### TypeScript / JavaScript
 
 ```bash
 npm install --save-dev @lint-configs/eslint-config eslint typescript
 ```
 
-Create `eslint.config.js`:
+### Markdown
+
+```bash
+npm install --save-dev @lint-configs/markdownlint-config markdownlint-cli
+```
+
+### Python
+
+The Python configs are plain TOML files. Install the tools they drive, then reference the configs:
+
+```bash
+pip install ruff mypy black pylint
+```
+
+## Usage
+
+### TypeScript / JavaScript
+
+Create `eslint.config.js` and spread the shared flat config:
 
 ```javascript
 import config from '@lint-configs/eslint-config/flat';
@@ -36,11 +68,9 @@ export default [
 ];
 ```
 
-### Markdown
+A legacy `.eslintrc` consumer can import `@lint-configs/eslint-config/legacy` instead.
 
-```bash
-npm install --save-dev @lint-configs/markdownlint-config markdownlint-cli
-```
+### Markdown
 
 Create `.markdownlint.json`:
 
@@ -52,61 +82,14 @@ Create `.markdownlint.json`:
 
 ### Python
 
-```bash
-pip install ruff mypy black pylint
-```
-
-Add to `pyproject.toml`:
+Point your `pyproject.toml` at the shared Ruff config:
 
 ```toml
 [tool.ruff]
 extend = "python/ruff.toml"
 ```
 
-## Features
-
-### TypeScript/JavaScript (@lint-configs/eslint-config)
-
-- **220+ rules** across multiple ESLint plugins
-- **Security** - XSS protection, eval prevention, unsafe regex detection
-- **Node.js** - Path validation, callback handling, async patterns
-- **React** - Hooks rules, accessibility (WCAG 2.1)
-- **TypeScript** - Strict types, explicit returns, no `any`
-- **Complexity** - Max cyclomatic 10, max params 5, max nesting 4
-
-[Full documentation →](./typescript/README.md)
-
-### Markdown (@lint-configs/markdownlint-config)
-
-- **40+ markdown rules** for documentation quality
-- **120 character line length** limit
-- **ATX-style headings** required
-- **Fenced code blocks** with language specifiers
-- **Consistent list indentation** (2 spaces)
-
-[Full documentation →](./markdown/README.md)
-
-### Python
-
-- **Ruff** - 40+ rule categories (E, F, I, B, W, C90, PLR, SIM, RET, ANN)
-- **MyPy** - Strict type checking
-- **Black** - Code formatting
-- **Pylint** - Duplicate code detection (4+ line duplicates)
-
-[Full documentation →](./python/README.md)
-
-## Philosophy
-
-> "If it's worth enabling, it's worth enforcing everywhere."
-
-These configurations:
-
-- Enforce strict quality standards for AI-generated code
-- Only disable rules that conflict with formatters (Prettier/Black)
-- Provide consistent standards across TypeScript, Python, and Markdown
-- Mirror each other's strictness levels
-
-## Comparison
+## Configuration
 
 | Feature                 | TypeScript        | Python      | Markdown  |
 | ----------------------- | ----------------- | ----------- | --------- |
@@ -119,30 +102,48 @@ These configurations:
 | Code formatting         | Prettier          | Black       | Prettier  |
 | Documentation standards | N/A               | N/A         | 40+ rules |
 
-## Claude Code Skills
+> "If it's worth enabling, it's worth enforcing everywhere."
 
-**Note:** Claude Code skills have been moved to the [claude-skills](https://github.com/cajias/claude-skills) repository.
+The guiding philosophy: enforce strict quality standards for AI-generated code, only disable rules that conflict with formatters, and keep every language's strictness in lockstep.
 
-The claude-skills repository includes:
+## How it works
 
-- SCA guardrails workflow skill
-- README writer and evaluator skills
-- And uses these linting configs as dependencies
+The repo is a monorepo of independently versioned, independently published config packages:
 
-## Contributing
+```text
+lint-configs/
+├── typescript/   @lint-configs/eslint-config   (npm, 220+ ESLint rules)
+├── markdown/     @lint-configs/markdownlint-config (npm, 40+ rules)
+└── python/       Ruff / MyPy / Black / Pylint TOML configs (PyPI)
+```
 
-Config changes affect all projects using these packages. Please:
+The `typescript/` and `markdown/` packages are npm workspaces; `python/` builds a distributable package via `python -m build`. Releases are automated with release-please, and CI verifies that every package installs cleanly before publish.
 
-1. Open an issue explaining the change
-2. Show examples of false positives or conflicts
-3. Consider impact on existing projects
-4. Get consensus before submitting PR
+## Development
+
+```bash
+# Clone
+git clone https://github.com/cajias/lint-configs.git
+cd lint-configs
+
+# Install workspace dev dependencies
+npm install
+
+# Lint Markdown across the repo
+npm run lint
+
+# Auto-fix lint issues
+npm run lint:fix
+
+# Check / apply formatting
+npm run format:check
+npm run format
+```
+
+Python configs live under `python/`; lint them locally with `ruff check .`, `black --check .`, and `mypy .` from that directory — the same commands CI runs.
+
+Config changes ripple out to every project consuming these packages, so please open an issue with concrete false-positive / conflict examples and get consensus before submitting a PR. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
 ## License
 
-MIT
-
-## Support
-
-- **Issues:** [GitHub Issues](https://github.com/cajias/lint-configs/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/cajias/lint-configs/discussions)
+Licensed under the [MIT License](./LICENSE).
