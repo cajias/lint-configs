@@ -9,11 +9,11 @@
   ],
   "scripts": {
     "lint": "npm run lint:md",
-    "lint:md": "npx markdownlint '**/*.md' --ignore node_modules --ignore '**/node_modules/**'",
+    "lint:md": "npx markdownlint '**/*.md' --ignore node_modules --ignore '**/node_modules/**' --ignore '**/CHANGELOG.md'",
     "lint:fix": "npm run lint:md:fix",
-    "lint:md:fix": "npx markdownlint '**/*.md' --ignore node_modules --ignore '**/node_modules/**' --fix",
-    "format": "npx prettier --write '**/*.{json,md}' --ignore-path .gitignore",
-    "format:check": "npx prettier --check '**/*.{json,md}' --ignore-path .gitignore",
+    "lint:md:fix": "npx markdownlint '**/*.md' --ignore node_modules --ignore '**/node_modules/**' --ignore '**/CHANGELOG.md' --fix",
+    "format": "npx prettier --write '**/*.{json,md}' --ignore-path .gitignore --ignore-path .prettierignore",
+    "format:check": "npx prettier --check '**/*.{json,md}' --ignore-path .gitignore --ignore-path .prettierignore",
     "commitlint": "npx commitlint --edit",
     "prepare": "husky"
   },
