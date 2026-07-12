@@ -1,5 +1,5 @@
 {
-  "name": "@lint-configs/markdownlint-config",
+  "name": "@cajias/markdownlint-config",
   "version": "1.0.0",
   "description": "Comprehensive markdownlint configuration for static code analysis",
   "main": ".markdownlint.json",
