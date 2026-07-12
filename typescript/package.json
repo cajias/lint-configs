@@ -1,8 +1,11 @@
 {
-  "name": "@lint-configs/eslint-config",
+  "name": "@cajias/eslint-config",
   "version": "1.0.3",
   "description": "Strict ESLint configuration for static code analysis",
   "main": "index.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "exports": {
     ".": "./index.js",
     "./flat": "./eslint.config.js",

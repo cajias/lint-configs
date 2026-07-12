@@ -22,8 +22,8 @@
 **Preferred linter configurations for common languages — strict, shareable, and built to catch the kind of slop that AI-generated code loves to sneak in.** `lint-configs` bundles battle-tested [ESLint](https://eslint.org/), [markdownlint](https://github.com/DavidAnson/markdownlint), [Ruff](https://docs.astral.sh/ruff/), [MyPy](https://mypy-lang.org/), [Black](https://black.readthedocs.io/), and [Pylint](https://pylint.readthedocs.io/) rule sets into installable packages, so every project you touch enforces the same uncompromising bar with a single dependency.
 
 <table>
-<tr><td><b>TypeScript / JavaScript</b></td><td>The <code>@lint-configs/eslint-config</code> npm package ships 220+ ESLint rules across security (XSS, eval, unsafe regex), Node.js, React hooks + accessibility, strict TypeScript, and complexity limits. Available as flat (<code>./flat</code>) or legacy (<code>./legacy</code>) configs.</td></tr>
-<tr><td><b>Markdown</b></td><td>The <code>@lint-configs/markdownlint-config</code> npm package provides 40+ documentation rules: 120-char line length, ATX-style headings, fenced code blocks with language hints, and consistent 2-space list indentation.</td></tr>
+<tr><td><b>TypeScript / JavaScript</b></td><td>The <code>@cajias/eslint-config</code> npm package ships 220+ ESLint rules across security (XSS, eval, unsafe regex), Node.js, React hooks + accessibility, strict TypeScript, and complexity limits. Available as flat (<code>./flat</code>) or legacy (<code>./legacy</code>) configs.</td></tr>
+<tr><td><b>Markdown</b></td><td>The <code>@cajias/markdownlint-config</code> npm package provides 40+ documentation rules: 120-char line length, ATX-style headings, fenced code blocks with language hints, and consistent 2-space list indentation.</td></tr>
 <tr><td><b>Python</b></td><td>Drop-in <code>ruff.toml</code> and <code>pyproject</code> configs for Ruff (40+ rule categories: E, F, I, B, W, C90, PLR, SIM, RET, ANN), MyPy strict typing, Black formatting, and Pylint duplicate-code detection.</td></tr>
 <tr><td><b>Formatter-aware</b></td><td>Only disables rules that genuinely conflict with formatters (Prettier / Black). Everything else stays on, so linter and formatter never fight.</td></tr>
 <tr><td><b>Mirrored strictness</b></td><td>Each language's config mirrors the others' rigor — line length, complexity (max 10), security scanning, dead-code detection, and import sorting are aligned across the stack.</td></tr>
@@ -37,13 +37,13 @@ These are configuration packages — install the one(s) for your stack.
 ### TypeScript / JavaScript
 
 ```bash
-npm install --save-dev @lint-configs/eslint-config eslint typescript
+npm install --save-dev @cajias/eslint-config eslint typescript
 ```
 
 ### Markdown
 
 ```bash
-npm install --save-dev @lint-configs/markdownlint-config markdownlint-cli
+npm install --save-dev @cajias/markdownlint-config markdownlint-cli
 ```
 
 ### Python
@@ -61,7 +61,7 @@ pip install ruff mypy black pylint
 Create `eslint.config.js` and spread the shared flat config:
 
 ```javascript
-import config from '@lint-configs/eslint-config/flat';
+import config from '@cajias/eslint-config/flat';
 
 export default [
   ...config,
@@ -75,7 +75,7 @@ export default [
 ];
 ```
 
-A legacy `.eslintrc` consumer can import `@lint-configs/eslint-config/legacy` instead.
+A legacy `.eslintrc` consumer can import `@cajias/eslint-config/legacy` instead.
 
 ### Markdown
 
@@ -83,7 +83,7 @@ Create `.markdownlint.json`:
 
 ```json
 {
-  "extends": "@lint-configs/markdownlint-config"
+  "extends": "@cajias/markdownlint-config"
 }
 ```
 
@@ -119,8 +119,8 @@ The repo is a monorepo of independently versioned, independently published confi
 
 ```text
 lint-configs/
-├── typescript/   @lint-configs/eslint-config   (npm, 220+ ESLint rules)
-├── markdown/     @lint-configs/markdownlint-config (npm, 40+ rules)
+├── typescript/   @cajias/eslint-config   (npm, 220+ ESLint rules)
+├── markdown/     @cajias/markdownlint-config (npm, 40+ rules)
 └── python/       Ruff / MyPy / Black / Pylint TOML configs (PyPI)
 ```
 

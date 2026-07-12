@@ -17,12 +17,12 @@
     },
     "typescript": {
       "release-type": "node",
-      "package-name": "@sca-skills/eslint-config",
+      "package-name": "@cajias/eslint-config",
       "changelog-path": "typescript/CHANGELOG.md"
     },
     "markdown": {
       "release-type": "node",
-      "package-name": "@sca-skills/markdownlint-config",
+      "package-name": "@cajias/markdownlint-config",
       "changelog-path": "markdown/CHANGELOG.md"
     }
   },

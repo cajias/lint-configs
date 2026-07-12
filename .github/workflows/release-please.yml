@@ -13,6 +13,10 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      # Per-path outputs from release-please; consumed by the publish job below.
+      eslint_release_created: ${{ steps.release.outputs['typescript--release_created'] }}
+      eslint_tag_name: ${{ steps.release.outputs['typescript--tag_name'] }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,3 +34,30 @@ jobs:
         run: |
           echo "Releases created:"
           echo '${{ toJSON(steps.release.outputs) }}'
+
+  # Publish the ESLint config to GitHub Packages whenever release-please cuts a
+  # new release for the typescript/ package. GITHUB_TOKEN has write:packages for
+  # the same owner (cajias), so no extra secret is required.
+  publish-eslint-config:
+    needs: release-please
+    if: needs.release-please.outputs.eslint_release_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@cajias'
+
+      - name: Publish @cajias/eslint-config to GitHub Packages
+        working-directory: typescript
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm publish
