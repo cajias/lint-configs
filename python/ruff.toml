@@ -114,4 +114,4 @@ convention = "google"  # Use Google-style docstrings
 [lint.isort]
 known-first-party = []  # Add your package names here in your project's pyproject.toml
 force-single-line = false
-lines-after-imports = 2
+lines-after-imports = 1  # match Black (1 blank line after imports) so Ruff and Black agree
