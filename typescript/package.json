@@ -1,6 +1,6 @@
 {
   "name": "@cajias/eslint-config",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Strict ESLint configuration for static code analysis",
   "main": "index.js",
   "publishConfig": {
