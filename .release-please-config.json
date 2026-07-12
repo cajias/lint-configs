@@ -2,13 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "bootstrap-sha": "a4aab214f70829ddeca5702ba4860268d96052b5",
   "packages": {
-    ".": {
-      "release-type": "simple",
-      "package-name": "sca-skills",
-      "changelog-path": "CHANGELOG.md",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true
-    },
     "python": {
       "release-type": "python",
       "package-name": "sca-skills",
@@ -31,8 +24,7 @@
       "type": "node-workspace"
     }
   ],
-  "group-pull-request-title-pattern": "chore: release ${version}",
-  "separate-pull-requests": false,
+  "separate-pull-requests": true,
   "changelog-sections": [
     { "type": "feat", "section": "Features" },
     { "type": "fix", "section": "Bug Fixes" },
