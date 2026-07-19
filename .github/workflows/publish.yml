@@ -3,16 +3,17 @@ name: Publish Packages
 on:
   push:
     tags:
-      - 'v*'  # Trigger on version tags like v1.0.0
-  workflow_dispatch:  # Allow manual triggering
+      - 'v*' # Trigger on legacy flat tags like v1.0.0
+      - '*-v*' # Trigger on release-please package tags like markdownlint-config-v1.1.0
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Required for creating releases
-      packages: write  # Required for publishing to GitHub Packages
-      id-token: write  # Required for trusted publishing
+      contents: write # Required for creating releases
+      packages: write # Required for publishing to GitHub Packages
+      id-token: write # Required for trusted publishing
 
     steps:
       - name: Checkout code
@@ -76,7 +77,7 @@ jobs:
       # Publish Python to PyPI
       - name: Publish Python to PyPI (Optional)
         # Only publish to PyPI if PYPI_API_TOKEN secret is set
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && (startsWith(github.ref_name, 'v') || contains(github.ref_name, '-v'))
         continue-on-error: true
         env:
           TWINE_USERNAME: __token__
@@ -89,7 +90,7 @@ jobs:
       # Publish TypeScript to npm
       - name: Publish TypeScript to npm (Optional)
         # Only publish to npm if NPM_TOKEN secret is set
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && (startsWith(github.ref_name, 'v') || contains(github.ref_name, '-v'))
         continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -107,7 +108,7 @@ jobs:
           scope: '@cajias'
 
       - name: Publish TypeScript to GitHub Packages
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') && (startsWith(github.ref_name, 'v') || contains(github.ref_name, '-v'))
         continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -118,7 +119,7 @@ jobs:
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/') && (startsWith(github.ref_name, 'v') || contains(github.ref_name, '-v'))
         with:
           files: |
             python/dist/*
@@ -126,15 +127,15 @@ jobs:
           generate_release_notes: true
           body: |
             ## 📦 Lint Configurations Release
-            
+
             This release packages canonical linting configurations for multiple languages.
 
             ## Installation
 
             ### Python
             ```bash
-            # Install from PyPI (if published)
-            pip install sca-skills
+            # Install from the wheel or sdist attached to this release
+            pip install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca_skills-<version>-py3-none-any.whl
 
             # Or install from Git
             pip install git+https://github.com/${{ github.repository }}.git@${{ github.ref_name }}#subdirectory=python
@@ -144,13 +145,9 @@ jobs:
 
             ### TypeScript/JavaScript
             ```bash
-            # Install from npm (if published)
-            npm install @sca-skills/eslint-config
-            npm install @sca-skills/markdownlint-config
-
-            # Install from release tarballs (replace version numbers with actual versions from release assets)
-            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-eslint-config-1.0.2.tgz
-            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/sca-skills-markdownlint-config-1.0.0.tgz
+            # Install from this release's tarballs (replace <version> with the asset's package version)
+            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/cajias-eslint-config-<version>.tgz
+            npm install https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/cajias-markdownlint-config-<version>.tgz
 
             # Or install from Git
             npm install git+https://github.com/${{ github.repository }}.git#subdirectory=typescript
@@ -183,5 +180,5 @@ jobs:
         run: |
           echo "::notice::✅ Packages published to GitHub Release!"
           echo "::notice::📦 Version: ${GITHUB_REF#refs/tags/}"
-          echo "::notice::Python: pip install git+https://github.com/${{ github.repository }}.git@${GITHUB_REF#refs/tags/}#subdirectory=python"
-          echo "::notice::TypeScript: npm install @sca-skills/eslint-config@${GITHUB_REF#refs/tags/}"
+          echo "::notice::Python: install the wheel or sdist attached to this release, or pip install git+https://github.com/${{ github.repository }}.git@${GITHUB_REF#refs/tags/}#subdirectory=python"
+          echo "::notice::Node.js: install the cajias-eslint-config-*.tgz or cajias-markdownlint-config-*.tgz asset attached to this release"
