@@ -29,7 +29,7 @@ confidence-threshold = 0.8
 # Deny duplicate versions of the same crate.
 multiple-versions = "warn"
 # Deny wildcard (path) dependencies in published crates.
-wildcards = "allow"
+wildcards = "deny"
 
 [sources]
 # Only allow crates from crates.io by default.

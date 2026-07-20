@@ -3,6 +3,7 @@
 //! Run `cajias-lint-configs init` to write `clippy.toml` and `deny.toml` into
 //! the current directory.
 
+use std::io::Write as _;
 use std::path::Path;
 
 use cajias_lint_configs::{CLIPPY_TOML, DENY_TOML};
@@ -28,14 +29,25 @@ fn init() {
 
 fn write_file(name: &str, content: &str) {
     let path = Path::new(name);
-    if path.exists() {
-        eprintln!("⚠️  {name} already exists — skipping (delete it first to overwrite)");
-        return;
-    }
-    std::fs::write(path, content).unwrap_or_else(|e| {
+    let mut file = match std::fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(path)
+    {
+        Ok(f) => f,
+        Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {
+            eprintln!("⚠️  {name} already exists — skipping (delete it first to overwrite)");
+            return;
+        }
+        Err(e) => {
+            eprintln!("❌  Failed to write {name}: {e}");
+            std::process::exit(1);
+        }
+    };
+    if let Err(e) = file.write_all(content.as_bytes()) {
         eprintln!("❌  Failed to write {name}: {e}");
         std::process::exit(1);
-    });
+    }
 }
 
 fn usage() {

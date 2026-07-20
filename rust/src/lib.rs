@@ -7,8 +7,8 @@
 //! # Quick start
 //!
 //! ```bash
-//! cargo add --dev cajias-lint-configs
-//! cargo run --bin cajias-lint-configs -- init
+//! cargo install cajias-lint-configs
+//! cajias-lint-configs init
 //! ```
 //!
 //! Or copy the constants directly:
@@ -23,7 +23,9 @@
 /// Canonical `clippy.toml` configuration.
 ///
 /// Enables the strictest Clippy settings: cognitive-complexity cap of 10,
-/// maximum function argument count of 5, and disallows common footguns.
+/// maximum function argument count of 5, and disallows common footguns
+/// (`std::collections::LinkedList`, `std::mem::forget`,
+/// `std::str::from_utf8_unchecked`, and `dbg!`).
 pub const CLIPPY_TOML: &str = include_str!("../clippy.toml");
 
 /// Canonical `deny.toml` configuration for [`cargo-deny`](https://embarkstudios.github.io/cargo-deny/).

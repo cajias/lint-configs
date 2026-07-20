@@ -64,7 +64,7 @@ std::fs::write("deny.toml", DENY_TOML).unwrap();
 
 | File | Tool | Description |
 |------|------|-------------|
-| `clippy.toml` | `cargo clippy` | Complexity cap (10), max args (5), and footgun blacklist |
+| `clippy.toml` | `cargo clippy` | Complexity cap (10), max args (5), and disallowed footguns (`LinkedList`, `mem::forget`, `from_utf8_unchecked`, `dbg!`) |
 | `deny.toml` | `cargo deny` | Advisory checks, licence allow-list, duplicate-version detection |
 
 ## Rules philosophy
