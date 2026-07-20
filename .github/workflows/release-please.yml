@@ -17,6 +17,8 @@ jobs:
       # Per-path outputs from release-please; consumed by the publish job below.
       eslint_release_created: ${{ steps.release.outputs['typescript--release_created'] }}
       eslint_tag_name: ${{ steps.release.outputs['typescript--tag_name'] }}
+      rust_release_created: ${{ steps.release.outputs['rust--release_created'] }}
+      rust_tag_name: ${{ steps.release.outputs['rust--tag_name'] }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,3 +68,25 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm publish
+
+  # Publish the Rust crate to crates.io whenever release-please cuts a new
+  # release for the rust/ package. Requires the CARGO_REGISTRY_TOKEN secret to
+  # be set in repository settings (Settings → Secrets → Actions).
+  publish-rust-crate:
+    needs: release-please
+    if: needs.release-please.outputs.rust_release_created == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Publish cajias-lint-configs to crates.io
+        working-directory: rust
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish

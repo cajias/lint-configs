@@ -1,0 +1,17 @@
+# Maximum cyclomatic (cognitive) complexity allowed per function.
+cognitive-complexity-threshold = 10
+
+# Maximum number of lines in a single function body.
+too-many-lines-threshold = 60
+
+# Maximum number of arguments a function may take.
+too-many-arguments-threshold = 5
+
+# Disallow string types that are not references or owned Strings.
+disallowed-types = []
+
+# Disallow methods whose names shadow std/core items.
+disallowed-methods = []
+
+# Disallow macro calls that expand to unsafe code.
+disallowed-macros = []

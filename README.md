@@ -19,12 +19,13 @@
   <img src="https://img.shields.io/badge/AI--ready-strict-FACC15?style=for-the-badge" alt="AI-ready strict">
 </p>
 
-**Preferred linter configurations for common languages — strict, shareable, and built to catch the kind of slop that AI-generated code loves to sneak in.** `lint-configs` bundles battle-tested [ESLint](https://eslint.org/), [markdownlint](https://github.com/DavidAnson/markdownlint), [Ruff](https://docs.astral.sh/ruff/), [MyPy](https://mypy-lang.org/), [Black](https://black.readthedocs.io/), and [Pylint](https://pylint.readthedocs.io/) rule sets into installable packages, so every project you touch enforces the same uncompromising bar with a single dependency.
+**Preferred linter configurations for common languages — strict, shareable, and built to catch the kind of slop that AI-generated code loves to sneak in.** `lint-configs` bundles battle-tested [ESLint](https://eslint.org/), [markdownlint](https://github.com/DavidAnson/markdownlint), [Ruff](https://docs.astral.sh/ruff/), [MyPy](https://mypy-lang.org/), [Black](https://black.readthedocs.io/), [Pylint](https://pylint.readthedocs.io/), and [Clippy](https://doc.rust-lang.org/clippy/) rule sets into installable packages, so every project you touch enforces the same uncompromising bar with a single dependency.
 
 <table>
 <tr><td><b>TypeScript / JavaScript</b></td><td>The <code>@cajias/eslint-config</code> npm package ships 220+ ESLint rules across security (XSS, eval, unsafe regex), Node.js, React hooks + accessibility, strict TypeScript, and complexity limits. Available as flat (<code>./flat</code>) or legacy (<code>./legacy</code>) configs.</td></tr>
 <tr><td><b>Markdown</b></td><td>The <code>@cajias/markdownlint-config</code> npm package provides 40+ documentation rules: 120-char line length, ATX-style headings, fenced code blocks with language hints, and consistent 2-space list indentation.</td></tr>
 <tr><td><b>Python</b></td><td>Drop-in <code>ruff.toml</code> and <code>pyproject</code> configs for Ruff (40+ rule categories: E, F, I, B, W, C90, PLR, SIM, RET, ANN), MyPy strict typing, Black formatting, and Pylint duplicate-code detection.</td></tr>
+<tr><td><b>Rust</b></td><td>The <code>cajias-lint-configs</code> crate on crates.io provides a <code>clippy.toml</code> (complexity cap 10, max args 5) and <code>deny.toml</code> (advisory + licence checks) along with a <code>[lints]</code> profile that forbids unsafe code and enables the full Clippy pedantic + nursery sets.</td></tr>
 <tr><td><b>Formatter-aware</b></td><td>Only disables rules that genuinely conflict with formatters (Prettier / Black). Everything else stays on, so linter and formatter never fight.</td></tr>
 <tr><td><b>Mirrored strictness</b></td><td>Each language's config mirrors the others' rigor — line length, complexity (max 10), security scanning, dead-code detection, and import sorting are aligned across the stack.</td></tr>
 <tr><td><b>CI-verified packaging</b></td><td>GitHub Actions lints every config, checks formatting, and proves both the npm and PyPI packages actually install before anything ships.</td></tr>
@@ -52,6 +53,13 @@ The Python configs are plain TOML files. Install the tools they drive, then refe
 
 ```bash
 pip install ruff mypy black pylint
+```
+
+### Rust
+
+```bash
+cargo install cajias-lint-configs
+cajias-lint-configs init
 ```
 
 ## Usage
@@ -96,18 +104,41 @@ Point your `pyproject.toml` at the shared Ruff config:
 extend = "python/ruff.toml"
 ```
 
+### Rust
+
+Run the scaffolding CLI to write `clippy.toml` and `deny.toml`:
+
+```bash
+cajias-lint-configs init
+```
+
+Then add the recommended `[lints]` section to your `Cargo.toml`:
+
+```toml
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+pedantic = "warn"
+nursery = "warn"
+unwrap_used = "warn"
+expect_used = "warn"
+panic = "warn"
+todo = "warn"
+```
+
 ## Configuration
 
-| Feature                 | TypeScript        | Python      | Markdown  |
-| ----------------------- | ----------------- | ----------- | --------- |
-| Line length             | Configurable      | 100         | 120       |
-| Type checking           | TypeScript strict | MyPy strict | N/A       |
-| Security                | XSS, eval, regex  | Bandit (S)  | N/A       |
-| Complexity              | Max 10            | Max 10      | N/A       |
-| Dead code detection     | Yes               | Yes         | N/A       |
-| Import sorting          | Yes               | Yes         | N/A       |
-| Code formatting         | Prettier          | Black       | Prettier  |
-| Documentation standards | N/A               | N/A         | 40+ rules |
+| Feature                 | TypeScript        | Python      | Rust          | Markdown  |
+| ----------------------- | ----------------- | ----------- | ------------- | --------- |
+| Line length             | Configurable      | 100         | N/A           | 120       |
+| Type checking           | TypeScript strict | MyPy strict | N/A           | N/A       |
+| Security                | XSS, eval, regex  | Bandit (S)  | cargo-deny    | N/A       |
+| Complexity              | Max 10            | Max 10      | Max 10        | N/A       |
+| Dead code detection     | Yes               | Yes         | Yes           | N/A       |
+| Import sorting          | Yes               | Yes         | N/A           | N/A       |
+| Code formatting         | Prettier          | Black       | rustfmt       | Prettier  |
+| Documentation standards | N/A               | N/A         | N/A           | 40+ rules |
 
 > "If it's worth enabling, it's worth enforcing everywhere."
 
@@ -121,10 +152,11 @@ The repo is a monorepo of independently versioned, independently published confi
 lint-configs/
 ├── typescript/   @cajias/eslint-config   (npm, 220+ ESLint rules)
 ├── markdown/     @cajias/markdownlint-config (npm, 40+ rules)
-└── python/       Ruff / MyPy / Black / Pylint TOML configs (PyPI)
+├── python/       Ruff / MyPy / Black / Pylint TOML configs (PyPI)
+└── rust/         cajias-lint-configs     (crates.io, Clippy + cargo-deny)
 ```
 
-The `typescript/` and `markdown/` packages are npm workspaces; `python/` builds a distributable package via `python -m build`. Releases are automated with release-please, and CI verifies that every package installs cleanly before publish.
+The `typescript/` and `markdown/` packages are npm workspaces; `python/` builds a distributable package via `python -m build`; `rust/` is a Cargo crate published to crates.io. Releases are automated with release-please, and CI verifies that every package installs cleanly before publish.
 
 ## Development
 
@@ -148,6 +180,8 @@ npm run format
 ```
 
 Python configs live under `python/`; lint them locally with `ruff check .`, `black --check .`, and `mypy .` from that directory — the same commands CI runs.
+
+Rust configs live under `rust/`; lint them locally with `cargo clippy --all-targets --all-features -- -D warnings` from that directory.
 
 Config changes ripple out to every project consuming these packages, so please open an issue with concrete false-positive / conflict examples and get consensus before submitting a PR. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
