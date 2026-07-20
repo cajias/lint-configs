@@ -1,0 +1,37 @@
+[package]
+name = "cajias-lint-configs"
+version = "0.1.0"
+edition = "2021"
+description = "Strict Clippy and Rust linting configurations — battle-tested rules that catch the kind of slop AI-generated code loves to sneak in"
+license = "MIT"
+repository = "https://github.com/cajias/lint-configs"
+homepage = "https://github.com/cajias/lint-configs/tree/main/rust"
+documentation = "https://docs.rs/cajias-lint-configs"
+readme = "README.md"
+keywords = ["linting", "clippy", "code-quality", "configuration", "static-analysis"]
+categories = ["development-tools"]
+include = [
+    "src/**/*",
+    "clippy.toml",
+    "deny.toml",
+    "README.md",
+    "LICENSE",
+]
+
+[lib]
+name = "cajias_lint_configs"
+
+[[bin]]
+name = "cajias-lint-configs"
+path = "src/main.rs"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+pedantic = "warn"
+nursery = "warn"
+unwrap_used = "warn"
+expect_used = "warn"
+panic = "warn"
+todo = "warn"
