@@ -62,23 +62,23 @@ std::fs::write("deny.toml", DENY_TOML).unwrap();
 
 ## Configuration files
 
-| File | Tool | Description |
-|------|------|-------------|
+| File          | Tool           | Description                                                                                                             |
+| ------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `clippy.toml` | `cargo clippy` | Complexity cap (10), max args (5), and disallowed footguns (`LinkedList`, `mem::forget`, `from_utf8_unchecked`, `dbg!`) |
-| `deny.toml` | `cargo deny` | Advisory checks, licence allow-list, duplicate-version detection |
+| `deny.toml`   | `cargo deny`   | Advisory checks, licence allow-list, duplicate-version detection                                                        |
 
 ## Rules philosophy
 
-| Concern | Setting |
-|-|-|
-| Unsafe code | `forbid` |
-| Clippy pedantic | `warn` (treat as errors in CI with `-- -D warnings`) |
-| Clippy nursery | `warn` |
-| Unwrap / expect / panic | `warn` |
-| Cognitive complexity | ≤ 10 per function |
-| Function arguments | ≤ 5 |
-| Security advisories | `deny` |
-| Yanked crates | `deny` |
+| Concern                 | Setting                                              |
+| ----------------------- | ---------------------------------------------------- |
+| Unsafe code             | `forbid`                                             |
+| Clippy pedantic         | `warn` (treat as errors in CI with `-- -D warnings`) |
+| Clippy nursery          | `warn`                                               |
+| Unwrap / expect / panic | `warn`                                               |
+| Cognitive complexity    | ≤ 10 per function                                    |
+| Function arguments      | ≤ 5                                                  |
+| Security advisories     | `deny`                                               |
+| Yanked crates           | `deny`                                               |
 
 ## CI integration
 

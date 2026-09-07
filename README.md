@@ -129,16 +129,16 @@ todo = "warn"
 
 ## Configuration
 
-| Feature                 | TypeScript        | Python      | Rust          | Markdown  |
-| ----------------------- | ----------------- | ----------- | ------------- | --------- |
-| Line length             | Configurable      | 100         | N/A           | 120       |
-| Type checking           | TypeScript strict | MyPy strict | N/A           | N/A       |
-| Security                | XSS, eval, regex  | Bandit (S)  | cargo-deny    | N/A       |
-| Complexity              | Max 10            | Max 10      | Max 10        | N/A       |
-| Dead code detection     | Yes               | Yes         | Yes           | N/A       |
-| Import sorting          | Yes               | Yes         | N/A           | N/A       |
-| Code formatting         | Prettier          | Black       | rustfmt       | Prettier  |
-| Documentation standards | N/A               | N/A         | N/A           | 40+ rules |
+| Feature                 | TypeScript        | Python      | Rust       | Markdown  |
+| ----------------------- | ----------------- | ----------- | ---------- | --------- |
+| Line length             | Configurable      | 100         | N/A        | 120       |
+| Type checking           | TypeScript strict | MyPy strict | N/A        | N/A       |
+| Security                | XSS, eval, regex  | Bandit (S)  | cargo-deny | N/A       |
+| Complexity              | Max 10            | Max 10      | Max 10     | N/A       |
+| Dead code detection     | Yes               | Yes         | Yes        | N/A       |
+| Import sorting          | Yes               | Yes         | N/A        | N/A       |
+| Code formatting         | Prettier          | Black       | rustfmt    | Prettier  |
+| Documentation standards | N/A               | N/A         | N/A        | 40+ rules |
 
 > "If it's worth enabling, it's worth enforcing everywhere."
 
