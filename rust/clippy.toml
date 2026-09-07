@@ -1,0 +1,24 @@
+# Maximum cyclomatic (cognitive) complexity allowed per function.
+cognitive-complexity-threshold = 10
+
+# Maximum number of lines in a single function body.
+too-many-lines-threshold = 60
+
+# Maximum number of arguments a function may take.
+too-many-arguments-threshold = 5
+
+# Disallow types that are almost never the right choice in Rust.
+disallowed-types = [
+    { path = "std::collections::LinkedList", reason = "Use Vec or VecDeque instead; LinkedList has poor cache locality in practice" },
+]
+
+# Disallow functions/methods with safer or more idiomatic alternatives.
+disallowed-methods = [
+    { path = "std::mem::forget", reason = "Use ManuallyDrop or scoped ownership instead; mem::forget can silently leak resources" },
+    { path = "std::str::from_utf8_unchecked", reason = "Use std::str::from_utf8 and handle the error explicitly" },
+]
+
+# Disallow macro calls that are typically debugging artifacts.
+disallowed-macros = [
+    { path = "std::dbg", reason = "Remove debug printouts before merging" },
+]

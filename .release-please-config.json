@@ -17,6 +17,11 @@
       "release-type": "node",
       "package-name": "@cajias/markdownlint-config",
       "changelog-path": "markdown/CHANGELOG.md"
+    },
+    "rust": {
+      "release-type": "rust",
+      "package-name": "cajias-lint-configs",
+      "changelog-path": "rust/CHANGELOG.md"
     }
   },
   "plugins": [
